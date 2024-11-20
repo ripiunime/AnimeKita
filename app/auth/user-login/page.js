@@ -23,7 +23,7 @@ export default function UserLoginPage() {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="container">
             <h1>Login User</h1>
             <form onSubmit={handleSubmit}>
                 <input
@@ -31,30 +31,19 @@ export default function UserLoginPage() {
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    style={{ display: 'block', margin: '10px auto', padding: '10px', width: '200px' }}
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    style={{ display: 'block', margin: '10px auto', padding: '10px', width: '200px' }}
                 />
-                <button
-                    type="submit"
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#28a745',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                    }}
-                >
-                    Login
-                </button>
+                <button type="submit">Login</button>
             </form>
-            {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
+            <p>
+                Belum punya akun? <a href="/auth/user-register">Register</a>
+            </p>
         </div>
     );
 }

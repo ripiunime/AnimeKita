@@ -12,8 +12,9 @@ export default function AdminLoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Dummy validasi
+        // Dummy validasi login admin
         if (username === 'admin' && password === 'admin123') {
+            // Simpan status login ke localStorage
             localStorage.setItem('adminLoggedIn', true);
             router.push('/dashboard/admin');
         } else {
@@ -22,7 +23,7 @@ export default function AdminLoginPage() {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="container">
             <h1>Login Admin</h1>
             <form onSubmit={handleSubmit}>
                 <input
@@ -30,18 +31,19 @@ export default function AdminLoginPage() {
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    style={{ display: 'block', margin: '10px auto', padding: '10px', width: '200px' }}
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    style={{ display: 'block', margin: '10px auto', padding: '10px', width: '200px' }}
                 />
-                <button type="submit" style={{ padding: '10px 20px', cursor: 'pointer' }}>Login</button>
+                <button type="submit">Login</button>
             </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
+            <p>
+                Belum punya akun? <a href="/auth/admin-register">Register</a>
+            </p>
         </div>
     );
 }

@@ -1,24 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
-export default function UserDashboard() {
-    const router = useRouter();
-
-    useEffect(() => {
-        // Cek apakah user sudah login
-        const isLoggedIn = localStorage.getItem('userLoggedIn');
-
-        if (!isLoggedIn) {
-            router.push('/auth/user-login'); // Arahkan ke halaman login user
-        }
-    }, [router]);
-
+export default function UserDashboardPage() {
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="container">
             <h1>Dashboard User</h1>
-            <p>Selamat datang di Dashboard User!</p>
+            <p>Selamat datang di dashboard user!</p>
+            <p>Anda dapat mengakses fitur sebagai pengguna dari sini.</p>
+            <button onClick={() => alert('Fitur user yang lebih lanjut')}>
+                Lihat Profil
+            </button>
         </div>
     );
 }

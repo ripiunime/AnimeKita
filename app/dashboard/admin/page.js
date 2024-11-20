@@ -1,24 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
-export default function AdminDashboard() {
-    const router = useRouter();
-
-    useEffect(() => {
-        // Contoh logika autentikasi dummy
-        const isLoggedIn = localStorage.getItem('adminLoggedIn');
-
-        if (!isLoggedIn) {
-            router.push('/auth/admin-login');
-        }
-    }, [router]);
-
+export default function AdminDashboardPage() {
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="container">
             <h1>Dashboard Admin</h1>
-            <p>Selamat datang di Dashboard Admin!</p>
+            <p>Selamat datang di dashboard admin!</p>
+            <p>Anda dapat mengelola semua fitur dari sini.</p>
+            <button onClick={() => alert('Fitur admin yang lebih lanjut')}>
+                Kelola Data
+            </button>
         </div>
     );
 }
