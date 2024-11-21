@@ -1,9 +1,10 @@
-/* globals.css */
+/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
+  color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -16,12 +17,43 @@ a {
   color: inherit;
 }
 
+input[type="text"],
+input[type="password"] {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Auth Container Styles */
 .auth-container {
   max-width: 400px;
   margin: 50px auto;
@@ -63,55 +95,7 @@ a {
   background-color: #005bb5;
 }
 
-.error-message {
-  color: red;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-/* globals.css */
-
-/* Styling umum untuk form dan button */
-input[type="text"],
-input[type="password"] {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-/* Styling untuk halaman dashboard dan login */
-.container {
-    text-align: center;
-    margin-top: 50px;
-}
-
-h1 {
-    font-size: 2rem;
-}
-
-.error-message {
-    color: red;
-    margin-top: 10px;
-}
-
-/* Gaya untuk halaman login */
+/* Login Specific Styles */
 .login-container {
   text-align: center;
   margin-top: 50px;
@@ -123,46 +107,30 @@ h1 {
   margin-bottom: 10px;
 }
 
-.login-description {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: #333;
-}
-
 .login-button {
-  margin: 10px;
   padding: 10px 20px;
-  font-size: 16px;
-  border: none;
   border-radius: 5px;
-  cursor: pointer;
+  font-size: 1rem;
   color: #fff;
-  transition: background-color 0.3s ease;
 }
 
 .login-button.admin {
   background-color: #0070f3;
-  /* Warna untuk tombol Admin */
 }
 
 .login-button.admin:hover {
   background-color: #005bb5;
-  /* Warna hover untuk tombol Admin */
 }
 
 .login-button.user {
   background-color: #28a745;
-  /* Warna untuk tombol User */
 }
 
 .login-button.user:hover {
   background-color: #218838;
-  /* Warna hover untuk tombol User */
 }
 
-/* end */
-
-/* Style untuk RegisterPage */
+/* Register Specific Styles */
 .register-container {
   text-align: center;
   margin-top: 50px;
@@ -173,29 +141,66 @@ h1 {
   margin-bottom: 10px;
 }
 
-.register-description {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+.register-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #fff;
 }
 
-.register-button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+.register-button.admin {
+  background-color: #0070f3;
+}
+
+.register-button.admin:hover {
+  background-color: #005bb5;
+}
+
+.register-button.user {
+  background-color: #28a745;
+}
+
+.register-button.user:hover {
+  background-color: #218838;
+}
+
+/* Dashboard Container Styles */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dashboard-button {
+  padding: 12px 24px;
+  font-size: 1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.register-button.admin {
+.dashboard-loginButton {
   background-color: #0070f3;
   color: #fff;
 }
 
-.register-button.user {
+.dashboard-registerButton {
   background-color: #28a745;
   color: #fff;
 }
-
-/* end */
-
