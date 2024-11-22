@@ -204,3 +204,97 @@ button:hover {
   background-color: #28a745;
   color: #fff;
 }
+/* end */
+
+/* Gaya untuk Dashboard */
+.dashboard {
+  background-image: url('/dashboard-bg.png');
+  /* Lokasi gambar di folder public */
+  background-size: cover;
+  /* Menutupi seluruh area */
+  background-position: center;
+  /* Memusatkan gambar */
+  min-height: 100vh;
+  /* Tinggi minimum 100% dari viewport */
+  color: #fff;
+  /* Teks putih untuk kontras */
+  display: flex;
+  /* Flexbox untuk tata letak konten */
+  flex-direction: column;
+  /* Menyusun konten secara vertikal */
+  justify-content: flex-start;
+  /* Konten berada di atas */
+  align-items: center;
+  /* Konten di tengah horizontal */
+  padding: 20px;
+  padding-top: 50px;
+  /* Memberikan jarak dari atas halaman */
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  /* Memastikan teks berada di tengah */
+  color: white;
+  /* Warna teks */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  /* Bayangan teks */
+}
+
+
+
+.dashboard-nav {
+  display: flex;
+  /* Flexbox untuk tombol */
+  gap: 10px;
+  /* Memberikan jarak antar tombol */
+}
+
+.dashboard-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* globals.css */
+
+body {
+  background-image: url('/dashboard-bg.png');
+  /* Lokasi gambar di folder public */
+  background-size: cover;
+  /* Menutupi seluruh area */
+  background-position: center;
+  /* Memusatkan gambar */
+  background-attachment: fixed;
+  /* Supaya background tidak scroll */
+  color: #fff;
+  /* Warna teks default */
+  margin: 0;
+  /* Menghapus margin default */
+  padding: 0;
+  /* Menghapus padding default */
+  font-family: Arial, sans-serif;
+  /* Font default */
+}
+
+/* Tambahan untuk elemen lain agar terlihat lebih baik */
+* {
+  box-sizing: border-box;
+}
+
+
+.login-button {
+  background-color: #0070f3;
+  /* Warna tombol login */
+}
+
+.register-button {
+  background-color: #ff4081;
+  /* Warna tombol register */
+}
+
+/* end */
