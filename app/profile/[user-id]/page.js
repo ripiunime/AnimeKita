@@ -1,53 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import '../../globals.css';
 
-const UserProfile = ({ params }) => {
-  const { userId } = params;
-  const [user, setUser] = useState(null);
+export default function ProfilePage({ params }) {
   const [reviews, setReviews] = useState([]);
-  const router = useRouter();
+  const userId = params['user-id'];
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userResponse = await axios.get(`/api/users/${userId}`);
-        setUser(userResponse.data);
-
-        const reviewsResponse = await axios.get(`/api/reviews?userId=${userId}`);
-        setReviews(reviewsResponse.data);
-      } catch (err) {
-        router.push('/auth/user-login'); // Redirect jika user tidak ditemukan
-      }
-    };
-
-    fetchUser();
-  }, [userId, router]);
-
-  if (!user) {
-    return <p>Loading...</p>;
-  }
+    // Fetch user reviews from the API
+    if (userId) {
+      fetch(`/api/users/${userId}/reviews`)
+        .then((res) => res.json())
+        .then((data) => setReviews(data))
+        .catch((err) => console.error('Error fetching user reviews:', err));
+    }
+  }, [userId]);
 
   return (
     <div className="container">
-      <h1>Profile of {user.username}</h1>
-      <p>Email: {user.email}</p>
-      <h2>My Reviews</h2>
-      <ul>
-        {reviews.map((review) => (
-          <li key={review.id}>
-            <h3>{review.animeTitle}</h3>
-            <p>{review.content}</p>
-          </li>
-        ))}
-      </ul>
+      <h1>Profil Anda</h1>
+      <h2>Ulasan Anda</h2>
+      {reviews.length === 0 ? (
+        <p>Anda belum memberikan ulasan.</p>
+      ) : (
+        <ul>
+          {reviews.map((review) => (
+            <li key={review.id}>
+              <h3>{review.anime.title}</h3>
+              <p>Rating: {review.rating}/5</p>
+              <p>{review.content}</p>
+              <small>Ditulis pada: {new Date(review.createdAt).toLocaleDateString()}</small>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
-
-export default UserProfile;
-
-
+}

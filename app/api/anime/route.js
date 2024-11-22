@@ -1,21 +1,9 @@
-import { NextResponse } from 'next/server';
-import { db } from '@/lib/db'; // Database connection
+export async function GET(request) {
+  const searchParams = new URLSearchParams(request.url.split('?')[1]);
+  const searchTerm = searchParams.get('search');
 
-export async function GET() {
-  const animeList = await db.anime.findMany(); // Ambil semua data anime dari database
-  return NextResponse.json(animeList);
-}
+  const response = await fetch(`https://api.myanimelist.net/v2?search=${searchTerm}`);
+  const data = await response.json();
 
-export async function POST(req) {
-  const { title, description, imageUrl } = await req.json();
-
-  const anime = await db.anime.create({
-    data: {
-      title,
-      description,
-      imageUrl,
-    },
-  });
-
-  return NextResponse.json({ message: 'Anime added successfully', anime });
+  return new Response(JSON.stringify(data));
 }

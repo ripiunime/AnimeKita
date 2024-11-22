@@ -1,96 +1,67 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import '../../globals.css';
 
-const AnimeDetail = ({ params }) => {
-  const { id } = params;
-  const [anime, setAnime] = useState(null);
-  const [reviewContent, setReviewContent] = useState(''); // Pindahkan ke dalam komponen
-  const [successMessage, setSuccessMessage] = useState(''); // Pindahkan ke dalam komponen
+export default function AnimeDetailPage({ params }) {
   const router = useRouter();
+  const [anime, setAnime] = useState(null);
+  const [review, setReview] = useState('');
+  const [userId, setUserId] = useState(null);
 
-  // Fetch anime details
   useEffect(() => {
-    const fetchAnime = async () => {
-      try {
-        const response = await axios.get(`/api/anime/${id}`);
-        setAnime(response.data);
-      } catch (error) {
-        console.error('Failed to fetch anime:', error);
-        router.push('/404'); // Redirect ke halaman 404 jika gagal
-      }
+    const userIdFromLocalStorage = localStorage.getItem('userId');
+    setUserId(userIdFromLocalStorage);
+
+    fetch(`/api/anime/${params.id}`)
+      .then((res) => res.json())
+      .then((data) => setAnime(data))
+      .catch((err) => console.error('Error fetching anime details:', err));
+  }, [params.id]);
+
+  // Handle review submission
+  const handleReviewSubmit = () => {
+    if (!review || !userId) return;
+
+    const reviewData = {
+      userId,
+      animeId: anime.id,
+      content: review,
+      rating: 5,  // You can add a rating system if necessary
     };
 
-    fetchAnime();
-  }, [id, router]);
-
-  // Handle form submission
-  const handleReviewSubmit = async (e) => {
-    e.preventDefault();
-
-    const user = localStorage.getItem('user');
-    if (!user) {
-      alert('You must be logged in to add a review');
-      return;
-    }
-
-    try {
-      const parsedUser = JSON.parse(user);
-
-      await axios.post('/api/reviews', {
-        animeId: id,
-        userId: parsedUser.id,
-        content: reviewContent,
-        animeTitle: anime.title,
-      });
-
-      setSuccessMessage('Review added successfully!');
-      setReviewContent('');
-    } catch (err) {
-      console.error('Failed to add review:', err);
-      alert('Failed to add review');
-    }
+    fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reviewData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert('Ulasan berhasil ditambahkan!');
+        router.push(`/profile/${userId}`);  // Redirect to user profile page after submitting the review
+      })
+      .catch((err) => console.error('Error submitting review:', err));
   };
-
-  if (!anime) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="container">
-      {/* Detail Anime */}
-      <h1>{anime.title}</h1>
-      <img src={anime.imageUrl} alt={anime.title} style={{ width: '300px', borderRadius: '10px' }} />
-      <p>{anime.description}</p>
+      {anime ? (
+        <>
+          <h1>{anime.title}</h1>
+          <img src={anime.posterUrl} alt={anime.title} />
+          <p>{anime.description}</p>
 
-      {/* Form Tambah Ulasan */}
-      <div>
-        <h2>Add Review</h2>
-        {successMessage && <p>{successMessage}</p>}
-        <form onSubmit={handleReviewSubmit}>
+          <h2>Berikan Ulasan Anda</h2>
           <textarea
-            placeholder="Write your review here..."
-            value={reviewContent}
-            onChange={(e) => setReviewContent(e.target.value)}
-            required
-            style={{
-              width: '100%',
-              height: '100px',
-              marginBottom: '10px',
-              borderRadius: '5px',
-              padding: '10px',
-            }}
-          ></textarea>
-          <button type="submit" style={{ padding: '10px 20px', borderRadius: '5px' }}>
-            Submit
-          </button>
-        </form>
-      </div>
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="Tulis ulasan Anda..."
+          />
+          <button onClick={handleReviewSubmit}>Kirim Ulasan</button>
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
-};
-
-export default AnimeDetail;
+}

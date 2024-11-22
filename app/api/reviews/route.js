@@ -1,32 +1,12 @@
-import { NextResponse } from 'next/server';
-import { db } from '@/lib/db'; // Database connection
+export async function POST(request) {
+  const reviewData = await request.json();
 
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get('userId');
-  const animeId = searchParams.get('animeId');
-
-  const reviews = await db.review.findMany({
-    where: {
-      ...(userId && { userId: Number(userId) }),
-      ...(animeId && { animeId: Number(animeId) }),
-    },
+  const response = await fetch('https://api.myanimelist.net/v2/reviews', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(reviewData),
   });
 
-  return NextResponse.json(reviews);
-}
-
-export async function POST(req) {
-  const { animeId, userId, content, animeTitle } = await req.json();
-
-  const review = await db.review.create({
-    data: {
-      animeId: Number(animeId),
-      userId: Number(userId),
-      content,
-      animeTitle,
-    },
-  });
-
-  return NextResponse.json({ message: 'Review added successfully', review });
+  const data = await response.json();
+  return new Response(JSON.stringify(data));
 }
