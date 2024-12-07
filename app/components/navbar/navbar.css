@@ -1,0 +1,33 @@
+/* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Navbar title */
+.navbar-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Navbar links container */
+.navbar-links {
+    display: flex;
+    gap: 15px;
+}
+
+/* Individual navbar links */
+.navbar-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.navbar-link:hover {
+    color: #ffcc00; /* Warna highlight saat hover */
+}

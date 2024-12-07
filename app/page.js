@@ -10,7 +10,6 @@ export default function Dashboard() {
 
     return (
         <div className="dashboard">
-            <Navbar /> {/* Include Navbar here */}
         </div>
     );
 }
