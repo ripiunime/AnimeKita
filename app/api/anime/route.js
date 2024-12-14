@@ -1,9 +1,10 @@
-export async function GET(request) {
-  const searchParams = new URLSearchParams(request.url.split('?')[1]);
-  const searchTerm = searchParams.get('search');
+import pool from "@/lib/db";
 
-  const response = await fetch(`https://api.myanimelist.net/v2?search=${searchTerm}`);
-  const data = await response.json();
-
-  return new Response(JSON.stringify(data));
+export async function GET() {
+  try {
+    const [rows] = await pool.query("SELECT * FROM anime");
+    return Response.json({ anime: rows });
+  } catch (error) {
+    return Response.json({ message: "Error fetching data", error }, { status: 500 });
+  }
 }

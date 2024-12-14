@@ -1,34 +1,27 @@
-// app/anime/page.js
-
-'use client';
-
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useEffect, useState } from "react";
 
 export default function AnimePage() {
-  const [animeList, setAnimeList] = useState([]);
-  const router = useRouter();
+  const [anime, setAnime] = useState([]);
 
   useEffect(() => {
-    fetch('/api/anime')
-      .then((res) => res.json())
-      .then((data) => setAnimeList(data))
-      .catch((err) => console.error(err));
+    async function fetchAnime() {
+      const res = await fetch("/api/anime");
+      const data = await res.json();
+      setAnime(data.anime);
+    }
+    fetchAnime();
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <h1>Daftar Anime</h1>
-      <ul className="anime-list">
-        {animeList.map((anime) => (
-          <li key={anime.id} className="anime-item">
-            <h3>{anime.title}</h3>
-            <p>Genre: {anime.genre}</p>
-            <p>Episodes: {anime.episodes}</p>
-            <Link href={`/anime/${anime.id}`}>
-              <button>Lihat Ulasan</button>
-            </Link>
+      <ul>
+        {anime.map((a) => (
+          <li key={a.id}>
+            <h2>{a.title}</h2>
+            <p>{a.description}</p>
+            <p>Release Date: {a.release_date}</p>
           </li>
         ))}
       </ul>

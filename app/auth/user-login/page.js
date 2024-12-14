@@ -1,50 +1,65 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './login.css';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function UserLoginPage() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const router = useRouter();
+export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/auth/user-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-        // Dummy validasi login user
-        if (username === 'user' && password === 'user123') {
-            // Simpan status login ke localStorage
-            localStorage.setItem('userLoggedIn', true);
-            router.push('/dashboard/user');
-        } else {
-            setError('Username atau password salah.');
-        }
-    };
+      const data = await response.json();
 
-    return (
-        <div className="container">
-            <h1>Login User</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Login</button>
-            </form>
-            {error && <p className="error-message">{error}</p>}
-            <p>
-                Belum punya akun? <a href="/auth/user-register">Register</a>
-            </p>
+      if (!response.ok) {
+        setError(data.message || "Something went wrong");
+        return;
+      }
+
+      // Redirect ke path berdasarkan role
+      router.push(data.redirectPath);
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Something went wrong");
+    }
+  };
+
+  return (
+    <div className="container">
+      <h1>Login</h1>
+      <form onSubmit={handleLogin}>
+        <div>
+          <label>Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
-    );
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        {error && <p className="error">{error}</p>}
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
 }

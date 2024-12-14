@@ -1,16 +1,44 @@
 'use client';
-import './navbar.css'; // Import file CSS
+
+import { useState, useEffect } from 'react';
+import './navbar.css'; // Pastikan file CSS sudah ada
 
 export default function Navbar() {
-    console.log('Navbar component loaded'); // Log untuk debug
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // State login
+
+    // Cek status login dari localStorage
+    useEffect(() => {
+        const syncLoginState = () => {
+        const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        console.log("localStorage isLoggedIn:", localStorage.getItem('isLoggedIn')); // Cek isi localStorage
+        console.log("Logged in status:", loggedIn);
+        setIsLoggedIn(loggedIn);
+        };
+
+        syncLoginState();
+
+        window.addEventListener('storage', syncLoginState);
+
+        return () => window.removeEventListener('storage', syncLoginState);
+
+    }, []);
+
+    
+
     return (
         <nav className="navbar">
-            <h1 className="navbar-title">AnimeKita</h1>
+            <a href="../" className="navbar-title">AnimeKita</a>
             <div className="navbar-links">
-                <a href="/dashboard/user" className="navbar-link">Dashboard</a>
-                <a href="../profile/[user-id]" className="navbar-link">Profile</a>
-                <a href="/auth/user-login" className="navbar-link">Login</a>
+                {!isLoggedIn ? (
+                    <>
+                        <a href="/auth/user-login" className="navbar-link">Login</a>
+                        <a href="/auth/user-register" className="navbar-link">Register</a>
+                        <a href="../profile" className="navbar-link">Profile</a>
+                    </>
+                ) : (
+                    <a href="../profile" className="navbar-link">Profile</a>
+                )}
             </div>
         </nav>
-    );
+    );  
 }

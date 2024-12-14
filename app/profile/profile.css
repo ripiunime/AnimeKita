@@ -1,0 +1,87 @@
+/* Styling umum untuk halaman profil */
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header halaman */
+.profile-container h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Deskripsi */
+.profile-container p {
+  font-size: 1rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Admin Panel Section */
+.admin-panel {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffefc3;
+  border: 1px solid #ffc107;
+  border-radius: 5px;
+}
+
+.admin-panel h2 {
+  font-size: 1.5rem;
+  color: #b37400;
+}
+
+.admin-panel p {
+  font-size: 1rem;
+  color: #804d00;
+}
+
+/* User Reviews Section */
+.user-reviews {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+  border-radius: 5px;
+}
+
+.user-reviews h2 {
+  font-size: 1.5rem;
+  color: #0d47a1;
+}
+
+.user-reviews p {
+  font-size: 1rem;
+  color: #084298;
+}
+
+/* Tombol Logout */
+.logout-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #b71c1c;
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 10px;
+  color: red;
+  font-size: 0.9rem;
+}
